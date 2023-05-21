@@ -1,7 +1,6 @@
 library(SuperLearner)
 library(tmle)
 library(CVXR)
-library(foreach)
 
 generate_data <- function(n){
   X <- runif(n)
@@ -84,7 +83,7 @@ k <- function(v1, v2, norm, P){
   return(k_base - f(y_1,a_1,x_1, P)*f(y_2,a_2,x_2, P)/norm)
 }
 
-
+# Construct Kernel Matrix
 k_mat <- function(Y,A,X, norm, P){
   n <- length(X)
   kmatrix <- matrix(0, nrow = n, ncol = n)
@@ -105,17 +104,8 @@ k_mat <- function(Y,A,X, norm, P){
   return(kmatrix)
 }
 
-# # check to see if this is mean zero
-# v1 <- unlist(P[1, 1:3])
-# k_hold <- rep(0, nrow(P))
-# for (i in 1:nrow(P)){
-#   v2 <- unlist(P[i, 1:3])
-#   k_hold[i] <- k(v1,v2, norm, P)
-# }
-# sum(k_hold * P$p) ## indeed mean 0!!!! so we're good to go!!!
 
-
-# atmle code: regularized approach with estimator
+# kdpe code
 kdpe <- function(Y,A,X,g,Q, density_bound = 0.01, converge_tol = 0.001){
   
   # initialize values
@@ -197,6 +187,6 @@ kdpe <- function(Y,A,X,g,Q, density_bound = 0.01, converge_tol = 0.001){
   mu1 <- mean(Q1_update)
   mu0 <- mean(Q0_update)
   or_estimates <- (mu1/(1-mu1))/(mu0/(1-mu0))
-  return(c(ate_estimates, rr_estimates, or_estimates))
+  return(c(ate_estimates, rr_estimates, or_estimates, iter_count))
 }
 
