@@ -8,8 +8,8 @@ The main function to test our algorithm is $\texttt{kdpe}(\cdot)$, which is impl
 - $\texttt{X}$: covariate / baseline characteristics vector
 - $\texttt{g}$: a function $g(x)$ that serves as the initial estimate of $P(A=1|X=x)$, must work with predict function
 - $\texttt{Q}$: a function $Q(a,x)$ that serves as the intial estimate of $P(Y=1|A=a, X=x)$, must work with predict function
-- $\texttt{density_bound}$: $c$, the density bound for KDPE, as described in Section 4
-- $\texttt{converge_tol}$: $\gamma$, the convergence tolerance, as described in Section 4
+- $\texttt{density\_bound}$: $c$, the density bound for KDPE, as described in Section 4
+- $\texttt{converge\_tol}$: $\gamma$, the convergence tolerance, as described in Section 4
 
 In this implementation, we use our convergence tolerance function to be $l(P,P')= \sum_{i=1}^n[P-P']^2$ (i.e. squared L-2 norm), and set $\texttt{density_bound} = 0.01, \ \texttt{converge_tol} = 0.001$ by default. 
 
