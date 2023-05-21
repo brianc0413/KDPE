@@ -11,7 +11,7 @@ The main function to test our algorithm is $\texttt{kdpe}(\cdot)$, which is impl
 - Density Bound: $c$, the density bound for KDPE, as described in Section 4
 - Convergence Tolerance: $\gamma$, the convergence tolerance, as described in Section 4
 
-In this implementation, we use our convergence tolerance function to be $l(P,P')= \sum_{i=1}^n[P-P']^2$ (i.e. squared L-2 norm), and set $\texttt{density_bound} = 0.01, \ \texttt{converge_tol} = 0.001$ by default. 
+In this implementation, we use our convergence tolerance function to be $l(P,P')= \sum_{i=1}^n[P-P']^2$ (i.e. squared L-2 norm), and set the density bound to 0.01, convergence tolerance = 0.001 by default. 
 
 The function returns a vector of length 4, which contains the following variables in this order:
 - $\hat{\psi}_{\text{ATE}}$: ATE estimate
