@@ -104,7 +104,7 @@ or_estimates <- na.omit(or_estimates)
 
 # Density Plots / QQ plots 
 
-df <- data.frame(Method = c(rep("kdpe", nrow(ate_estimates)), rep("TMLE", nrow(ate_estimates)), rep("SL", nrow(ate_estimates))),
+df <- data.frame(Method = c(rep("KDPE", nrow(ate_estimates)), rep("TMLE", nrow(ate_estimates)), rep("SL", nrow(ate_estimates))),
                  ATE = c(ate_estimates$kdpe, ate_estimates$TMLE, ate_estimates$SL))
 
 library(ggplot2)
@@ -161,7 +161,46 @@ ggplot(df_2, aes(sample=RR,fill= Method, color = Method))+
 ggplot(df_3, aes(sample=OR,fill= Method, color = Method))+
   stat_qq() + 
   stat_qq_line() + theme_bw() + labs(y= "Sample Quantiles for OR", x = "Theoretical Quantiles")
+  
+# ATE Histograms (compared to limit distribution)
+var_ate_true <- 0.002515497
+# true variance and ate
+true_var <- var(if_vec)/450
+true_ate <- ate_true
 
+dat_KDPE <- df[df$Method=="KDPE", 2]
+x_fit <- seq(-0.1, 
+             0.4, length = 40)
+y_fit <- dnorm(x_fit, mean = true_ate, sd = sqrt(true_var))
+x_breaks <- seq(from = -1*0.1,to= 0.4,length.out= 20)
+
+hist(dat_KDPE, prob = TRUE,
+     xlab = "KDPE ATE Estimates", 
+     breaks = x_breaks,
+     xlim = c(-0.1, 0.4), main = "KDPE ATE Distribution",
+     col = "red", ylim = c(0, 7.5))
+lines(x_fit, y_fit, col = "purple", lwd = 2)+ 
+  legend("topright", c("KDPE", "Limit"), fill=c("red", "purple"))
+
+
+dat_tmle <- df[df$Method=="TMLE",2]
+hist(dat_tmle, prob = TRUE,
+     xlab = "TMLE ATE Estimates", 
+     breaks = x_breaks,
+     xlim = c(-0.1, 0.4), main = "TMLE ATE Distribution",
+     col = "blue", ylim = c(0, 7.5))
+lines(x_fit, y_fit, col = "purple", lwd = 2)+ 
+  legend("topright", c("TMLE", "Limit"), fill=c("blue", "purple"))
+
+
+dat_sl <- df[df$Method=="SL",2]
+hist(dat_sl, prob = TRUE,
+     xlab = "SL ATE Estimates", 
+     breaks = x_breaks,
+     xlim = c(-0.1, 0.4), main = "SL ATE Distribution",
+     col = "green", ylim = c(0, 7.5))
+lines(x_fit, y_fit, col = "purple", lwd = 2)+ 
+  legend("topright", c("SL", "Limit"), fill=c("green", "purple"))
 
 
 # Dataframe for printing table
