@@ -106,7 +106,7 @@ k_mat <- function(Y,A,X, norm, P){
 
 
 # kdpe code
-kdpe <- function(Y,A,X,g,Q, density_bound = 0.01, converge_tol = 0.001){
+kdpe <- function(Y,A,X,g,Q, density_bound = 0.002, converge_tol = 0.001){
   
   # initialize values
   n <- length(X)
