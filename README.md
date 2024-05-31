@@ -1,7 +1,7 @@
 # KDPE
 All code for the simulations presented in "Kernel Debiased Plug-in Estimation" is provided in this repository. To ensure that the code runs, our simulations require the packages $\texttt{SuperLearner}$, $\texttt{tmle}$, $\texttt{CVXR}$, and $\texttt{ggplot2}$. 
 
-The main function to test our algorithm is $\texttt{kdpe}(\cdot)$, which is implemented in the helper file. In particular, it takes in the following arguments:
+The main function to test our algorithm is $\texttt{kdpe}(\cdot)$, which is implemented in the helper file under each folder (DGP1, DGP2 respectively). For DGP1, it takes in the following arguments:
 
 - $\texttt{Y}$: binary outcome vector
 - $\texttt{A}$: binary treatment vector
